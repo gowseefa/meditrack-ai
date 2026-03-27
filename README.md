@@ -47,4 +47,3 @@ Meditrack AI is a full-stack healthcare management web application designed for 
 
 ---
 
-## 📂 Project Structure
