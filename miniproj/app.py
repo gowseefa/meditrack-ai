@@ -270,4 +270,4 @@ def view_report(report_id):
     return render_template('view_report.html', report=report, explanation=explanation)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=5000)
