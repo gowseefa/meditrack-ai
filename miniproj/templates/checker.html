@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="checker-container" style="max-width: 800px; margin: 0 auto;">
+    <div style="text-align: center; margin-bottom: 2rem; color: white;">
+        <h2 style="color: white; border: none;"><i class="fas fa-stethoscope"></i> AI-Powered Symptom Checker</h2>
+        <p style="opacity: 0.9;">Identify potential conditions by entering patient symptoms below.</p>
+    </div>
+
+    <div class="form-container" style="max-width: 100%;">
+        <form method="POST">
+            <div class="form-group">
+                <label for="symptoms">Enter symptoms (comma separated)</label>
+                <textarea id="symptoms" name="symptoms" rows="4" required
+                    placeholder="e.g. fever, headache, cough">{{ symptoms_input }}</textarea>
+            </div>
+            <button type="submit" style="width: 100%;"><i class="fas fa-search"></i> Check Symptoms</button>
+        </form>
+    </div>
+
+    {% if suggestions %}
+    <div class="suggestions-section" style="margin-top: 2rem;">
+        <h3 style="margin-bottom: 1rem;">Suggestions:</h3>
+        <div class="dashboard-grid">
+            {% for item in suggestions %}
+            <div class="card" style="background: #ebf5fb; border-top-color: #f39c12; padding: 1.5rem;">
+                <h4
+                    style="color: #2c3e50; font-size: 1.2rem; margin-bottom: 15px; border-bottom: 2px solid #ddd; padding-bottom: 10px;">
+                    {{ item.disease }}</h4>
+                <p style="color: #34495e; font-size: 0.95rem; line-height: 1.5; margin-bottom: 10px;">
+                    <strong><i class="fas fa-info-circle"></i> Explanation:</strong><br>
+                    {{ item.explanation }}
+                </p>
+                <p style="color: #27ae60; font-size: 0.95rem; line-height: 1.5; margin-bottom: 15px;">
+                    <strong><i class="fas fa-pills"></i> Suggested Medicines/Action:</strong><br>
+                    {{ item.medicines }}
+                </p>
+                <p
+                    style="font-size: 0.85rem; color: #e74c3c; font-style: italic; border-top: 1px dashed #ccc; padding-top: 10px;">
+                    Please consult with a doctor for a definitive diagnosis before taking any medication.
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="info-note"
+        style="margin-top: 2rem; padding: 1rem; background: #fff3cd; border: 1px solid #ffeeba; border-radius: 4px; color: #856404; font-size: 0.9rem;">
+        <strong>Note:</strong> This tool is for informational purposes only and is not a substitute for professional
+        medical advice, diagnosis, or treatment.
+    </div>
+</div>
+{% endblock %}

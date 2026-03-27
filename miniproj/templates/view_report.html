@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="header-actions"
+    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2 style="color: white;"><i class="fas fa-microscope"></i> Detailed Report Analysis</h2>
+    <a href="{{ url_for('reports') }}" class="btn" style="background: rgba(255,255,255,0.2);"><i
+            class="fas fa-arrow-left"></i> Back to Repository</a>
+</div>
+
+<div class="dashboard-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
+    <!-- Report Preview Section -->
+    <div class="card" style="padding: 1.5rem;">
+        <h3 style="border: none;">Report Preview</h3>
+        <div class="preview-container"
+            style="background: #000; border-radius: 12px; overflow: hidden; display: flex; justify-content: center; align-items: center; min-height: 400px;">
+            {% if report.file_name.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+            <img src="{{ url_for('uploaded_file', filename=report.file_name) }}" alt="Patient Report"
+                style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            {% else %}
+            <div style="color: white; text-align: center; padding: 2rem;">
+                <i class="fas fa-file-pdf fa-4xl" style="font-size: 4rem; margin-bottom: 1rem; color: #e74c3c;"></i>
+                <p>PDF Document Preview not available.</p>
+                <a href="{{ url_for('uploaded_file', filename=report.file_name) }}" target="_blank" class="btn"
+                    style="margin-top: 1rem;">Open in New Tab</a>
+            </div>
+            {% endif %}
+        </div>
+        <div style="margin-top: 1.5rem;">
+            <p><strong>Patient:</strong> {{ report.patient_name }}</p>
+            <p><strong>Uploaded:</strong> {{ report.upload_date }}</p>
+        </div>
+    </div>
+
+    <!-- AI Analysis Section -->
+    <div class="card" style="border-top-color: var(--medical-teal); position: relative; overflow: hidden;">
+        <div style="position: absolute; top: -10px; right: -10px; opacity: 0.1;">
+            <i class="fas fa-robot fa-6x"></i>
+        </div>
+        <h3><i class="fas fa-brain" style="color: var(--medical-teal);"></i> AI Report Explanation</h3>
+        <p style="font-size: 0.9rem; color: #7f8c8d; margin-bottom: 1.5rem;">Automated analysis powered by Gemini Vision
+            AI</p>
+
+        <div class="explanation-box"
+            style="background: #f8f9fa; border-left: 5px solid var(--medical-teal); padding: 1.5rem; border-radius: 0 12px 12px 0; font-family: 'Outfit', sans-serif; line-height: 1.8;">
+            <pre
+                style="white-space: pre-wrap; font-family: inherit; font-size: 1.1rem; color: var(--text-main);">{{ explanation }}</pre>
+        </div>
+
+        <div
+            style="margin-top: 2rem; padding: 1rem; background: #ebf5fb; border-radius: 8px; font-size: 0.85rem; color: #2980b9;">
+            <i class="fas fa-info-circle"></i> <strong>Disclaimer:</strong> This AI explanation is for medical guidance
+            only. It is not a definitive diagnosis and must be reviewed by a certified medical professional.
+        </div>
+    </div>
+</div>
+{% endblock %}

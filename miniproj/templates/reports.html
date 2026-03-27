@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="header-actions" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2 style="color: white;"><i class="fas fa-file-medical"></i> Patient Reports & Documents</h2>
+    <button onclick="toggleForm()" class="btn-success"><i class="fas fa-upload"></i> Upload New Report</button>
+</div>
+
+<div id="reportForm" class="form-container" style="display: none; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+    <h3>Upload Patient Document</h3>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label>Patient Name</label>
+            <input type="text" name="patient_name" required placeholder="Enter patient name">
+        </div>
+        <div class="form-group">
+            <label>Select File (PDF, PNG, JPG)</label>
+            <input type="file" name="report_file" required accept=".pdf,.png,.jpg,.jpeg,.gif">
+        </div>
+        <button type="submit" style="width: 100%;">Save & Upload</button>
+        <button type="button" onclick="toggleForm()" style="background: #95a5a6; width: 100%; margin-top: 10px;">Cancel</button>
+    </form>
+</div>
+
+<div class="list-section">
+    <h3>Document Repository</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Patient Name</th>
+                <th>File Name</th>
+                <th>Upload Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in reports %}
+            <tr>
+                <td><strong>{{ r.patient_name }}</strong></td>
+                <td>{{ r.file_name }}</td>
+                <td>{{ r.upload_date }}</td>
+                <td>
+                    <a href="{{ url_for('view_report', report_id=r.id) }}" class="btn" style="padding: 0.5rem 1rem; font-size: 0.8rem;">
+                        <i class="fas fa-search-plus"></i> View & Analyze
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" style="text-align: center;">No reports uploaded yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function toggleForm() {
+    const form = document.getElementById('reportForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+</script>
+{% endblock %}

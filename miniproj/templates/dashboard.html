@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="dashboard-header"
+    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; color: white;">
+    <h2 style="color: white; border: none;">Welcome Back, {{ session.username }}!</h2>
+    <div class="date" id="current-date" style="font-size: 1.1rem; opacity: 0.9;"></div>
+</div>
+
+<div class="dashboard-grid">
+    <div class="card">
+        <h3>{{ doctor_count }}</h3>
+        <p>Total Staff</p>
+        <a href="{{ url_for('doctors') }}" style="display: block; margin-top: 10px; color: var(--medical-blue);">Manage
+            Staff</a>
+    </div>
+    <div class="card" style="border-top-color: var(--medical-teal);">
+        <h3>{{ patient_count }}</h3>
+        <p>Total Patients</p>
+        <a href="{{ url_for('patients') }}"
+            style="display: block; margin-top: 10px; color: var(--medical-teal);">Patient Directory</a>
+    </div>
+    <div class="card" style="border-top-color: #f39c12;">
+        <i class="fas fa-stethoscope fa-3x" style="color: #f39c12; margin-bottom: 10px;"></i>
+        <p>Expert Checker</p>
+        <a href="{{ url_for('checker') }}" style="display: block; margin-top: 10px; color: #f39c12;">Start Screening</a>
+    </div>
+    <div class="card" style="border-top-color: var(--accent);">
+        <i class="fas fa-file-pdf fa-3x" style="color: var(--accent); margin-bottom: 10px;"></i>
+        <p>Medical Reports</p>
+        <a href="{{ url_for('reports') }}" style="display: block; margin-top: 10px; color: var(--accent);">Access
+            Docs</a>
+    </div>
+</div>
+
+<div class="recent-section">
+    <h3>Recently Registered Patients</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Symptoms</th>
+                <th>Disease</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in recent_patients %}
+            <tr>
+                <td>{{ patient.name }}</td>
+                <td>{{ patient.age }}</td>
+                <td>{{ patient.symptoms }}</td>
+                <td>{{ patient.disease }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" style="text-align: center;">No patients registered yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+</script>
+{% endblock %}

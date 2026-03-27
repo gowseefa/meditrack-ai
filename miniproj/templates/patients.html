@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="header-actions" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2 style="color: white;"><i class="fas fa-user-injured"></i> Patient Registry</h2>
+    <button onclick="toggleForm()" class="btn-success"><i class="fas fa-plus"></i> Register Patient</button>
+</div>
+
+<div id="patientForm" class="form-container" style="display: none; margin-bottom: 2rem; max-width: 900px;">
+    <h3>Register New Patient</h3>
+    <form method="POST">
+        <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+                <label>Patient Name</label>
+                <input type="text" name="name" required>
+            </div>
+            <div class="form-group">
+                <label>Age</label>
+                <input type="number" name="age" required>
+            </div>
+            <div class="form-group">
+                <label>Gender</label>
+                <select name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Symptoms</label>
+            <textarea name="symptoms" rows="3" placeholder="e.g. Fever, Cough"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Diagnosed Disease</label>
+            <input type="text" name="disease" placeholder="e.g. Common Cold">
+        </div>
+        <div class="form-group">
+            <label>Prescription</label>
+            <textarea name="prescription" rows="3" placeholder="Medicines prescribed..."></textarea>
+        </div>
+        <button type="submit" class="btn-success">Register Patient</button>
+        <button type="button" onclick="toggleForm()" style="background: #95a5a6;">Cancel</button>
+    </form>
+</div>
+
+<div class="list-section">
+    <h3>Patient Records</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age/Gender</th>
+                <th>Symptoms</th>
+                <th>Disease</th>
+                <th>Prescription</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in patients %}
+            <tr>
+                <td><strong>{{ p.name }}</strong></td>
+                <td>{{ p.age }} ({{ p.gender }})</td>
+                <td>{{ p.symptoms }}</td>
+                <td><span style="color: var(--danger-color);">{{ p.disease }}</span></td>
+                <td>{{ p.prescription }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5" style="text-align: center;">No patient records found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function toggleForm() {
+    const form = document.getElementById('patientForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+</script>
+{% endblock %}

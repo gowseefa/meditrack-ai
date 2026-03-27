@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="form-container">
+    <h2 style="text-align: center; margin-bottom: 1.5rem;"><i class="fas fa-lock"></i> Doctor Login</h2>
+    <form method="POST">
+        <div class="form-group">
+            <label for="email">Email ID</label>
+            <input type="email" id="email" name="email" required placeholder="example@gmail.com">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required placeholder="Enter password">
+        </div>
+        <button type="submit" style="width: 100%;">Login</button>
+    </form>
+    <p style="text-align: center; margin-top: 1rem; color: #777; font-size: 0.8rem; line-height: 1.4;">
+        Example credentials for testing:<br>
+        Email: example@gmail.com<br>
+        Password: password123
+    </p>
+</div>
+{% endblock %}
